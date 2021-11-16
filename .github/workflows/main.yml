@@ -1,0 +1,23 @@
+name: CI
+
+on: push
+
+jobs:
+  test:
+    name: Lint and Run
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: sudo apt-get -y install curl jq shellcheck
+
+    - name: Lint
+      run: shellcheck scan_archived_url.sh
+
+    - name: Scan URLs from list
+      run: xargs -a urls -r -E "#" -I % ./scan_archived_url.sh %
+      continue-on-error: true

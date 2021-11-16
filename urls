@@ -1,0 +1,23 @@
+https://thestandnews.com/
+https://www.inmediahk.net/
+https://www.hkcnews.com/
+https://www.scmp.com/
+https://www.hk01.com/
+https://theinitium.com/
+https://www.passiontimes.hk/
+https://harbourtimes.com/
+https://news.rthk.hk/rthk/ch/
+https://collection.news/
+https://hk.epochtimes.com/
+https://www.voanews.com/
+https://www.rfa.org/
+
+#
+# Guess the local media outlet, assuming the frame was added to the homepage.
+#
+# We skip the below URLs.
+
+https://amnesty.org.hk/     # IA doesn't contain snapshots from the relevant period
+https://www.winandmac.com/  # IA doesn't contain snapshots from the relevant period
+https://dbchannel.hk/       # IA doesn't contain snapshots from the relevant period
+https://hongkongfp.com/     # Excluded from IA

@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+CURL_OPTS=( --retry 3 --retry-connrefused --retry-delay 0 -fsS )
+
 function log {
     echo -e "\e[2m$1\e[22m" >&2
 }
@@ -12,7 +14,7 @@ function get_snapshot_urls {
     local -r query=".archived_snapshots.closest.url"
     # We take "late August" to be from the 17th to the 31st.
     for timestamp in {20210817..20210831}; do
-        curl -fsS "$archive_url?url=$url&timestamp=$timestamp" | jq -r "$query" | sed "s/^http:/https:/"
+        curl "${CURL_OPTS[@]}" "$archive_url?url=$url&timestamp=$timestamp" | jq -r "$query" | sed "s/^http:/https:/"
     done
 }
 
@@ -29,13 +31,14 @@ function main {
 
     for snapshot_url in "${snapshot_urls[@]}"; do
         log "Scraping $snapshot_url"
-        snapshot=$(curl -fsS "$snapshot_url")
+        snapshot=$(curl "${CURL_OPTS[@]}" "$snapshot_url")
         for delivery_domain in "${delivery_domains[@]}"; do
             log "Checking $snapshot_url for IoC \"$delivery_domain"\"
             result="$(grep "$delivery_domain" <<< "$snapshot" || true)"
-            [[ -n "$result" ]] \
-                && grep --color "$delivery_domain" <<< "$result"\
-                && exit 0
+            if [[ -n "$result" ]]; then
+                grep --color "$delivery_domain" <<< "$result"
+                exit 0
+            fi
         done
     done
 }

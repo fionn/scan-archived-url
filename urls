@@ -17,6 +17,12 @@ https://tmhk.org/
 https://hkcitizenmedia.com/
 https://unwire.hk/
 https://news.now.com/home/
+https://www.socrec.org/
+https://studioincendo.com/
+https://factwire.org/
+https://hkfeature.com/
+https://tmhk.org/
+https://flashmediahk.com/
 
 #
 # Guess the local media outlet, assuming the frame was added to the homepage.
@@ -26,4 +32,5 @@ https://news.now.com/home/
 https://amnesty.org.hk/     # IA doesn't contain snapshots from the relevant period
 https://www.winandmac.com/  # IA doesn't contain snapshots from the relevant period
 https://dbchannel.hk/       # IA doesn't contain snapshots from the relevant period
+https://pshk.pro/           # IA doesn't contain snapshots from the relevant period
 https://hongkongfp.com/     # Excluded from IA

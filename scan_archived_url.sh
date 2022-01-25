@@ -30,16 +30,18 @@ function main {
     mapfile -t snapshot_urls < <(for v in "${snapshot_urls[@]/null}"; do echo "$v"; done | sort -u)
 
     for snapshot_url in "${snapshot_urls[@]}"; do
-        log "Scraping $snapshot_url"
-        snapshot=$(curl "${CURL_OPTS[@]}" "$snapshot_url")
-        for delivery_domain in "${delivery_domains[@]}"; do
-            log "Checking $snapshot_url for IoC \"$delivery_domain"\"
-            result="$(grep "$delivery_domain" <<< "$snapshot" || true)"
-            if [[ -n "$result" ]]; then
-                grep --color "$delivery_domain" <<< "$result"
-                exit 0
-            fi
-        done
+        if [[ -n "$snapshot_url" ]]; then
+            log "Scraping $snapshot_url"
+            snapshot=$(curl "${CURL_OPTS[@]}" "$snapshot_url")
+            for delivery_domain in "${delivery_domains[@]}"; do
+                log "Scanning $snapshot_url for IoC \"$delivery_domain"\"
+                result="$(grep -F "$delivery_domain" <<< "$snapshot" || true)"
+                if [[ -n "$result" ]]; then
+                    grep --color -F "$delivery_domain" <<< "$result"
+                    exit 0
+                fi
+            done
+        fi
     done
 }
 
